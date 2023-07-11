@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import ContactManager from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const contacts = ['Ariel', 'Agawin', 'Calipay'];
 root.render(
   <React.StrictMode>
-    <App />
+    <ContactManager data={contacts} />
   </React.StrictMode>
 );
 

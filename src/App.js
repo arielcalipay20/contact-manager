@@ -1,25 +1,51 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
-function App() {
+function ContactManager(props) {
+  const [contacts, setContacts] = useState(props.data);
+  const addPerson = (name) => {
+    setContacts([...contacts, name]);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AddPersonForm handleSubmit={addPerson} />
+      <PeopleList data={contacts} />
+    </>
   );
 }
 
-export default App;
+const PeopleList = (props) => {
+  const arr = props.data;
+  const listItems = arr.map((val, index) => {
+    return <li key={index}>{val}</li>
+  })
+  return (
+    <ul>{listItems}</ul>
+  );
+}
+
+const AddPersonForm = (props) => {
+  const [person, setPerson] = useState('');
+
+  const handleChange = (e) => {
+    setPerson(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
+    if (person !== '') {
+      props.handleSubmit(person);
+      setPerson('');
+    }
+    e.preventDefault();
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type='text' placeholder='Add Contact' value={person} onChange={handleChange} />
+      <button type='submit'>Add</button>
+    </form>
+  );
+}
+
+
+export default ContactManager;
